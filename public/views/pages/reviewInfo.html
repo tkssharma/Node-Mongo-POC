@@ -1,0 +1,472 @@
+<div class="container" ng-controller="reviewInfoController">
+    <div class="row">
+        <div class="form-group">
+            <div class="btn-container-right">
+                <a href="#/dashboard">
+                    <button type="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        home
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <form class="form-horizontal" role="form">
+                <h2 class="form_style_h2">Preview Data</h2>
+                <div style="text-align: center;">
+                    <input type="checkbox" id="intlinkimp" name="intlinkimp" ng-checked="intliCheck"
+                           ng-model="intlinkimp"  ng-click="validate()" ng-disabled="checkBoxDisable"/>&nbsp;&nbsp;&nbsp;Intlinkimp&nbsp;&nbsp;&nbsp;
+                    <!--   </div> -->
+                    <br />
+                    <br /> <input id="CA_Start" type="radio" name="content"
+                                  ng-model="radioButtonShow" value="CA_Start"
+                                  ng-disabled='{{dissabledVal}}' ng-click="validateradioButton()">&nbsp;&nbsp;&nbsp;CA-Start&nbsp;&nbsp;&nbsp;
+                    <input id="CA_Financial" type="radio" name="content"
+                           ng-model="radioButtonShow" value="CA_Financial"
+                           ng-disabled='{{dissabledVal}}' ng-click="validateradioButton()">&nbsp;&nbsp;&nbsp;CA-Financial&nbsp;&nbsp;&nbsp;
+                    <input id="CA-Submit" type="radio" name="content"
+                           ng-model="radioButtonShow" value="CA_Submit"
+                           ng-disabled='{{dissabledVal}}' ng-click="validateradioButton()">&nbsp;&nbsp;&nbsp;CA-Submit&nbsp;&nbsp;&nbsp;
+                    <input id="CA-learnMore" type="radio" name="content"
+                           ng-model="radioButtonShow" value="CA_LearnMore"
+                           ng-disabled='{{dissabledVal}}' ng-click="validateradioButton()">&nbsp;&nbsp;&nbsp;CA-Learn
+                    More&nbsp;&nbsp;&nbsp; <br />
+                </div>
+                <br />
+                <br />
+                <div class="form-group">
+                    <label for="pageName" class="col-sm-4 control-label">Data Layer Name</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="page_name" class="form-control" ng-model="dataLayerName" ng-disabled='{{dissabledVal}}'>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pageName" class="col-sm-4 control-label">PageName</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="page_name" placeholder="Page Name"
+                               class="form-control" ng-model="selectedData.page.pageInfo.pageName"
+                               autofocus ng-disabled="disablePageName">
+                    </div>
+                    <div class="col-sm-1 checkboxAlign">
+                        <input type="checkbox" id="page_name" name="page_name"
+                               ng-model="disablePageName" ng-click="disableReviewInfo(disablePageName)" ng-checked="pageNameChecckBox" ng-disabled="checkBoxDisable"/>
+                    </div>
+                    <div class="ctooltip col-sm-1">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                        <span class="tooltiptext">By checking this box,  the value for this variable will become dynamic. It will have to be set in the data layer on the application page by the application team</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="country code" class="col-sm-4 control-label">Country</label>
+                    <div class="col-sm-6">
+                        <select id="country" class="form-control" autofocus
+                                ng-model="selectedData.page.pageInfo.country"
+                                ng-disabled='{{dissabledVal}}'>
+                            <!--        <option value="Please Select One">Please Select One</option> -->
+                            <option value="US">US</option>
+                            <option value="UK">UK</option>
+                            <option value="AU">AU</option>
+                            <option value="IN">IN</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- /.form-group -->
+                <div class="form-group">
+                    <label for="language" class="col-sm-4 control-label">Language</label>
+                    <div class="col-sm-6">
+                        <select id="language" class="form-control"
+                                ng-model="selectedData.page.pageInfo.language"
+                                ng-disabled='{{dissabledVal}}'>
+                            <option value="en">en</option>
+                            <option value="fr">fr</option>
+                            <option value="es">es</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessUnit" class="col-sm-4 control-label">Business
+                        Unit</label>
+                    <div class="col-sm-6">
+                        <select id="country" class="form-control"
+                                ng-model="selectedData.page.category.businessUnit"
+                                ng-disabled='{{dissabledVal}}'>
+                            <option>Acquisition</option>
+                            <option>Merchant</option>
+                            <option>Travel</option>
+                            <option>OPENForum</option>
+                            <option>MR</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="primaryCategory" class="col-sm-4 control-label">Primary Category</label>
+
+                    <div class="col-sm-6">
+                        <select id="primaryCategory" class="form-control"
+                                ng-model="selectedData.page.category.primaryCategory"
+                                ng-disabled='{{dissabledVal}}'>
+                            <option>application1</option>
+                            <option>application2</option>
+                            <option>application3</option>
+                            <option>eApply</option>
+                        </select>
+                    </div>
+                    <!-- {{page.category.primaryCategory}} -->
+                </div>
+
+                <div class="form-group">
+                    <label for="subCategory1" class="col-sm-4 control-label">Sub
+                        Category 1</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="subCategory1" placeholder="Sub Category 1"
+                               class="form-control"
+                               ng-model="selectedData.page.category.subCategory1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subCategory2" class="col-sm-4 control-label">Sub
+                        Category 2</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="subCategory2" placeholder="Sub Category 2"
+                               class="form-control"
+                               ng-model="selectedData.page.category.subCategory2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subCategory3" class="col-sm-4 control-label">Sub
+                        Category 3</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="subCategory3" placeholder="Sub Category 3"
+                               class="form-control"
+                               ng-model="selectedData.page.category.subCategory3">
+                    </div>
+                </div>
+                <div class="form-group" ng-show="intlinkimp">
+                    <label for="autoTrack" class="col-sm-4 control-label">Intlinkimp</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="intlinkimp" class="form-control"
+                               ng-model="selectedData.page.attributes.intlinkimp"
+                               ng-disabled="disable_Intlinkimp">
+                        <!-- {{data.Intlinkimp}} -->
+                    </div>
+                    <div class="col-sm-1 checkboxAlign">
+                        <input type="checkbox" id="Intlinkimp_disable"
+                               name="Intlinkimp_disable" ng-model="disable_Intlinkimp"
+                               ng-click="intlinkimpdisable()" ng-disabled="checkBoxDisable"  />
+                    </div>
+                    <div class="ctooltip col-sm-1">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                        <span class="tooltiptext">By checking this box,  the value for this variable will become dynamic. It will have to be set in the data layer on the application page by the application team</span>
+                    </div>
+                </div>
+
+                <div ng-show="radioButtonShow == 'CA_Start'">
+                    <h3 class="form_style_h3">CA Start</h3>
+                    <div class="form-group">
+                        <label for="autoTrack" class="col-sm-4 control-label">Product
+                            Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" id="CAStartproduct_Name"
+                                   placeholder="Product Name" class="form-control"
+                                   ng-model="selectedDatas.event.productInfo.productName"
+                                   ng-disabled="disable_productName" ng-change="editReviewInfo()">
+                        </div>
+                        <div class="col-sm-1 checkboxAlign">
+                            <input type="checkbox" id="CAStartproduct_Name" name="page_name"
+                                   ng-model="disable_productName"
+                                   ng-click="disableproductName(disable_productName)" ng-checked="productNameCheckBox" ng-disabled="checkBoxDisable" />
+                        </div>
+                        <div class="ctooltip col-sm-1">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="tooltiptext">By checking this box,  the value for this variable will become dynamic. It will have to be set in the data layer on the application page by the application team</span>
+                        </div>
+                    </div>
+                    <!-- {{page.attributes.autotrack}} -->
+                    <div class="form-group">
+                        <label for="country code" class="col-sm-4 control-label">pmc</label>
+                        <div class="col-sm-6">
+                            <select id="CAStartpmc_id" class="form-control"
+                                    ng-model="selectedDatas.event.productInfo.pmc"
+                                    ng-disabled="disable_pmc" ng-change="editReviewInfo()">
+
+                                <option value="999">999</option>
+                                <option value="888">888</option>
+                                <option value="777">777</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1 checkboxAlign">
+                            <input type="checkbox" id="CAStartpmc_id" name="page_name"
+                                   ng-model="disable_pmc" ng-click="disablepmc(disable_pmc)" ng-checked="pmcCheckBox" ng-disabled="checkBoxDisable" />
+                        </div>
+                        <div class="ctooltip col-sm-1">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="tooltiptext">By checking this box,  the value for this variable will become dynamic. It will have to be set in the data layer on the application page by the application team</span>
+                        </div>
+                    </div>
+                    <!-- {{page.pageInofrmation.country}} -->
+                </div>
+
+                <div ng-show="radioButtonShow == 'CA_Financial'">
+                    <h3 class="form_style_h3">CA Financial</h3>
+                    <div class="form-group">
+                        <label for="autoTrack" class="col-sm-4 control-label">Product
+                            Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" id="CA_Financialproduct_Name"
+                                   placeholder="Product Name" class="form-control"
+                                   ng-model="selectedDatas.event.productInfo.productName"
+                                   ng-disabled="disable_productName" ng-change="editReviewInfo()">
+                        </div>
+                        <div class="col-sm-1 checkboxAlign">
+                            <input type="checkbox" id="CA_Financialproduct_Name"
+                                   name="page_name" ng-model="disable_productName"
+                                   ng-click="disableproductName(disable_productName)" ng-checked="productNameCheckBox" ng-disabled="checkBoxDisable" />
+                        </div>
+                        <div class="ctooltip col-sm-1">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="tooltiptext">By checking this box,  the value for this variable will become dynamic. It will have to be set in the data layer on the application page by the application team</span>
+                        </div>
+                    </div>
+                    <!-- {{page.attributes.autotrack}} -->
+                    <div class="form-group">
+                        <label for="country code" class="col-sm-4 control-label">pmc</label>
+                        <div class="col-sm-6">
+                            <select id="CA_Financial_id" class="form-control"
+                                    ng-model="selectedDatas.event.productInfo.pmc"
+                                    ng-disabled="disable_pmc" ng-change="editReviewInfo()">
+                                <!--   <option value="Please Select One">Please Select One</option> -->
+                                <option value="999">999</option>
+                                <option value="888">888</option>
+                                <option value="777">777</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1 checkboxAlign">
+                            <input type="checkbox" id="CA_Financial_id" name="page_name"
+                                   ng-model="disable_pmc" ng-click="disablepmc(disable_pmc)" ng-checked="pmcCheckBox" ng-disabled="checkBoxDisable" />
+                        </div>
+                        <div class="ctooltip col-sm-1">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="tooltiptext">By checking this box,  the value for this variable will become dynamic. It will have to be set in the data layer on the application page by the application team</span>
+                        </div>
+
+                    </div>
+                    <!-- {{page.pageInofrmation.country}} -->
+                </div>
+
+                <div ng-show="radioButtonShow == 'CA_Submit'">
+                    <h3 class="form_style_h3">CA Submit</h3>
+                    <div class="form-group">
+                        <label for="autoTrack" class="col-sm-4 control-label">Product
+                            Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" id="CA_Submitproduct_Name"
+                                   placeholder="Product Name" class="form-control"
+                                   ng-model="selectedDatas.event.productInfo.productName"
+                                   ng-disabled="disable_productName" ng-change="editReviewInfo()">
+                        </div>
+                        <div class="col-sm-1 checkboxAlign">
+                            <input type="checkbox" id="CA_Submitproduct_Name" name="page_name"
+                                   ng-model="disable_productName"
+                                   ng-click="disableproductName(disable_productName)" ng-checked="productNameCheckBox" ng-disabled="checkBoxDisable" />
+                        </div>
+                        <div class="ctooltip col-sm-1">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="tooltiptext">By checking this box,  the value for this variable will become dynamic. It will have to be set in the data layer on the application page by the application team</span>
+                        </div>
+                    </div>
+                    <!-- {{page.attributes.autotrack}} -->
+                    <div class="form-group">
+                        <label for="country code" class="col-sm-4 control-label">pmc</label>
+                        <div class="col-sm-6">
+                            <select id="CA_Submitpmc_id" class="form-control"
+                                    ng-model="selectedDatas.event.productInfo.pmc"
+                                    ng-disabled="disable_pmc" ng-change="editReviewInfo()">
+
+                                <option value="999">999</option>
+                                <option value="888">888</option>
+                                <option value="777">777</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1 checkboxAlign">
+                            <input type="checkbox" id="CA_Submitpmc_id" name="page_name"
+                                   ng-model="disable_pmc" ng-click="disablepmc(disable_pmc)" ng-checked="pmcCheckBox" ng-disabled="checkBoxDisable" />
+                        </div>
+                        <div class="ctooltip col-sm-1">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="tooltiptext">By checking this box,  the value for this variable will become dynamic. It will have to be set in the data layer on the application page by the application team</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="radioButtonShow == 'CA_LearnMore'">
+                    <h3 class="form_style_h3">CA Learn More</h3>
+                    <div class="form-group">
+                        <label for="autoTrack" class="col-sm-4 control-label">Product
+                            Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" id="CA_LearnMoreproduct_Name"
+                                   placeholder="Product Name" class="form-control"
+                                   ng-model="selectedDatas.event.productInfo.productName"
+                                   ng-disabled="disable_productName" ng-change="editReviewInfo()">
+                        </div>
+                        <div class="col-sm-1 checkboxAlign">
+                            <input type="checkbox" id="CA_LearnMoreproduct_Name"
+                                   name="page_name" ng-model="disable_productName"
+                                   ng-click="disableproductName(disable_productName)" ng-checked="productNameCheckBox" ng-disabled="checkBoxDisable" />
+                        </div>
+                        <div class="ctooltip col-sm-1">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="tooltiptext">By checking this box,  the value for this variable will become dynamic. It will have to be set in the data layer on the application page by the application team</span>
+                        </div>
+                    </div>
+                    <!-- {{page.attributes.autotrack}} -->
+                    <div class="form-group">
+                        <label for="country code" class="col-sm-4 control-label">pmc</label>
+                        <div class="col-sm-6">
+                            <select id="CA_LearnMorepmc_id" class="form-control"
+                                    ng-model="selectedDatas.event.productInfo.pmc"
+                                    ng-disabled="disable_pmc" ng-change="editReviewInfo()">
+
+                                <option value="999">999</option>
+                                <option value="888">888</option>
+                                <option value="777">777</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1 checkboxAlign">
+                            <input type="checkbox" id="CA_LearnMorepmc_id" name="page_name"
+                                   ng-model="disable_pmc" ng-click="disablepmc(disable_pmc)" ng-checked="pmcCheckBox" ng-disabled="checkBoxDisable" />
+                        </div>
+                        <div class="ctooltip col-sm-1">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            <span class="tooltiptext">By checking this box,  the value for this variable will become dynamic. It will have to be set in the data layer on the application page by the application team</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-lg-5" style="word-wrap: break-word;">
+            <h2 class="form_style_h2 ">Data Layer</h2>
+            <button type="submit" ng-show="!hide"
+                    class="btn btn-primary btn-block" ng-click="edit()" id="edit"
+                    value="edit">edit</button>
+
+            <button type="submit" ng-show="show"
+                    class="btn btn-primary btn-block" ng-click="save()" id="edit"
+                    value="save">Save</button>
+            <br>
+            <pre ng-show="!show">  {{jsonData | json}} </pre>
+            <textarea id="content" value="sample text" disabled="true"
+                      ng-show="show" autofocus />
+            {{jsonData}}
+            </textarea>
+        </div>
+    </div>
+    <div class="row">
+        <form class="form-horizontal form_style " role="form" name="myform">
+            <h2 class="form_style_h2 ">Request Parameters</h2>
+
+
+            <div class="form-group">
+                <label for="firstName" class="col-sm-3 control-label">Request
+                    Parameter 1</label>
+                <div class="col-sm-4">
+                    <input type="text" id="Request_Parameter1_key" class="form-control"
+                           ng-model="selectedDataRP.Request_Parameter1.key" placeholder="Key"
+                           ng-required="true" name="Request_Parameterkey1">
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" id="Request_Parameter1_value"
+                           class="form-control"
+                           ng-model="selectedDataRP.Request_Parameter1.value"
+                           placeholder="Value" ng-required="true"
+                           name="Request_Parametervalue1">
+                </div>
+
+                <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2"
+                     style="padding-left: 0px; padding-right: 0px;">
+                    <button type="submit" class="btn btn-primary btn-block"
+                            ng-click="myform.Request_Parametervalue1.$valid && myform.Request_Parameterkey1.$valid && addRP2()"
+                            ng-show="!button2">+</button>
+                    <button type="submit" class="btn btn-primary btn-block"
+                            ng-click="myform.Request_Parametervalue1.$valid && myform.Request_Parameterkey1.$valid && deleteRP2()"
+                            ng-show="buttonMinus">-</button>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="request_parameter2">
+                <label for="firstName" class="col-sm-3 control-label">Request
+                    Parameter 2</label>
+                <div class="col-sm-4">
+                    <input type="text" id="Request_Parameter2_key" class="form-control"
+                           ng-model="selectedDataRP.Request_Parameter2.key" placeholder="Key"
+                           ng-required="true" name="Request_Parameterkey2">
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" id="Request_Parameter2_value"
+                           class="form-control"
+                           ng-model="selectedDataRP.Request_Parameter2.value"
+                           placeholder="Value" ng-required="true"
+                           name="Request_Parametervalue2">
+                </div>
+
+                <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2"
+                     style="padding-left: 0px; padding-right: 0px;">
+                    <button type="submit" class="btn btn-primary btn-block"
+                            ng-click="myform.Request_Parametervalue2.$valid && myform.Request_Parameterkey2.$valid && addRP3()"
+                            ng-show="!button3">+</button>
+                    <button type="submit" class="btn btn-primary btn-block"
+                            ng-click="myform.Request_Parametervalue2.$valid && myform.Request_Parameterkey2.$valid && deleteRP3()"
+                            ng-show="buttonMinus2">-</button>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="request_parameter3">
+                <label for="firstName" class="col-sm-3 control-label">Request
+                    Parameter 3</label>
+                <div class="col-sm-4">
+                    <input type="text" id="Request_Parameter3_key" class="form-control"
+                           ng-model="selectedDataRP.Request_Parameter3.key" placeholder="Key"
+                           ng-required="true" name="Request_Parameterkey3">
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" id="Request_Parameter3_value"
+                           class="form-control"
+                           ng-model="selectedDataRP.Request_Parameter3.value"
+                           placeholder="Value" ng-required="true"
+                           name="Request_Parametervalue3">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <a href='{{backButton}}'><button type="submit"
+                                                         class="btn btn-primary btn-block"
+                                                         ng-click="savePageInfo(pageInfo,dataLayerName)">Back</button></a>
+                    </div>
+                    <!--   <form ng-submit="editDataLayer()"> -->
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <button type="submit" ng-show="!button2"
+                                class="btn btn-primary btn-block"
+                                ng-click="myform.Request_Parametervalue1.$valid && myform.Request_Parameterkey1.$valid && saveDetails(selectedDataRP)">Submit</button>
+                        <button type="submit" ng-show="button2 && !button3"
+                                class="btn btn-primary btn-block"
+                                ng-click="myform.Request_Parametervalue1.$valid && myform.Request_Parametervalue2.$valid && myform.Request_Parameterkey1.$valid && myform.Request_Parameterkey2.$valid && saveDetails(selectedDataRP)">Submit</button>
+                        <button type="submit" ng-show="button2 && button3"
+                                class="btn btn-primary btn-block"
+                                ng-click="myform.Request_Parametervalue1.$valid && myform.Request_Parametervalue2.$valid && myform.Request_Parametervalue3.$valid && myform.Request_Parameterkey1.$valid && myform.Request_Parameterkey2.$valid && myform.Request_Parameterkey3.$valid && saveDetails(selectedDataRP)">Submit</button>
+
+                    </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+
+        </form>
+        <!-- /form -->
+    </div>
+</div>

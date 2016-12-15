@@ -1,0 +1,6 @@
+node_modules/*
+configuration/production.json
+jsconfig.json
+.vscode/*
+npm-debug.log
+configuration/development.json

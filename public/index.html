@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+
+    <title>ProjectDashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css"> <!-- custom styles -->
+
+    <!-- JS -->
+
+    <script src="js/lib/angular/angular-lib/angular.min.js"></script>
+    <script src="js/lib/angular/router/angular-route.min.js"></script>
+    <script src="js/lib/angular/ngStorage/ngStorage.js"></script>
+
+
+    <!-- ANGULAR CUSTOM -->
+    <script src="js/app.route.js"></script>
+    <script src="js/app.controller.js"></script>
+    <script src="js/app.service.js"></script>
+
+
+</head>
+<body>
+<div ng-app="mainApp">
+    <ng-view></ng-view>
+</div>
+</body>
+</html>

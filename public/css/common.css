@@ -1,0 +1,103 @@
+/**
+* <h1>Common Css File!</h1>
+*
+* <p>
+* <b>Note:</b> Giving proper comments in your program makes it more
+* user friendly and it is assumed as a high quality code.
+*
+* @author :Ramesh,Siddartha,Bhagirath
+* @version 1.0
+* @since   2016-09-08
+*/
+
+/*@-ms-viewport{
+  width: device-width;
+}*/
+.vertical-center{
+    text-align:center;
+}
+
+.form_style {
+    max-width: 600px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0.3em;
+}
+
+.form_style_h2 {
+    margin-left: 4em;
+    margin-bottom: 1em;
+}
+
+.form_style_h3{
+    text-align:center;
+}
+
+#content {
+    width: 100%;
+    height: 200px;
+}
+
+#edit, #save {
+    padding: 2px;
+    width: 50px;
+}
+
+#save {
+    display: none;
+}
+
+.asterisk{
+    color:red; padding-top:8px;
+}
+
+.thankyouparam{
+
+    color:#006bb3; font-weight:bold; font-style: oblique;
+}
+
+.ctooltip {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+    padding-left:1px;
+}
+
+.ctooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    right:-56px;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.ctooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.ctooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.checkboxAlign{
+    margin-top:9px;
+    padding-left:28px;
+}

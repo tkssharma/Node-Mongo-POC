@@ -1,0 +1,72 @@
+<!--
+Html for Thankyou page after DataLayer creation
+ -->
+<div class="container" ng-controller="thankyouController">
+    <div class="form-group">
+        <div class="btn-container-right">
+            <a href="#/dashboard">
+                <button type="button" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    home
+                </button>
+            </a>
+        </div>
+
+    </div>
+    <div class="page-header">
+
+        <h1>Thank You,data Layer is added</h1>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">To check the Data Layer json data</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li>
+                    <ul>
+                        <li>Hit the following url
+                            http://10.17.152.41:18080/ITAG_POC/getDataLayer?</li>
+                        <li>Pass the parameters --> <span class="thankyouparam">{{$s_storage.reqParams}}</span></li>
+                        <li>Ex: https://10.17.152.41:18080/getDataLayer?<span
+                                class="thankyouparam">{{$s_storage.reqParams}}</span></li>
+                        <li>hit the url</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">To update the Data Layer Json data</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li>
+                    <ul>
+                        <li>Hit the following url
+                            http://host:port/ITAG_POC/updateDataLayer?</li>
+                        <li>Pass the parameters --> <!-- <span class="thankyouparam">{{
+								$s_storage.reqParams }}</span>
+						</li>
+						<li>Pass the modified Data Layer json in body</li>
+						<li>hit the url</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>  -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Redirect to DataLayer List</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li align="center"><a href="#/listofdatalayer"><button
+                        type="submit" class="btn btn-primary" ng-click="">Data
+                    Layer</button></a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>

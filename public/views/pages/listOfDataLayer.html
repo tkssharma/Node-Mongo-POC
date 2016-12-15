@@ -1,0 +1,61 @@
+<!--
+    Html for showing listof DataLayers
+    -->
+
+<div class="container" ng-app="mainApp" ng-controller="listOfDataLayerController">
+    <div class="row" ng-init="getDataLayers">
+
+        <div class="form-group">
+            <div class="btn-container-right">
+                <a href="#/dashboard"><button type="submit"
+                                                class="btn btn-primary" ng-click="">Go To Projects</button></a>
+                <a href="#/home"><button type="submit"
+                                            class="btn btn-primary pull-right" ng-click="saveProjectName(pageId)">Create New Data Layer</button></a>
+            </div>
+
+        </div>
+        <!-- <div ng-model="projectTitle">{{projectTitle}}</div> -->
+        <div class="col-lg-6" style="text-align:center">
+            <h2 class="form_style_h2" ng-model="projectTitle">{{projectTitle}}</h2>
+        </div>
+        <div class="col-lg-6" style="text-align:center" hidden="true">
+            <h2 class="form_style_h2" ng-model="projectId">{{projectId}}</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card-box">
+                    <h4 class="text-dark  header-title m-t-0">All Requests</h4>
+                    <!-- 					<p class="text-muted m-b-25 font-13">Here are the all projects
+                                                which you requested. You can see them and edit by clicking on that
+                                                request if you want.</p> -->
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Data layer Name</th>
+                                    <th>Request Parameter</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="dataLayer in page_data_layer">
+                                    <td ng-model="dl.id">{{dataLayer.id}}</td>
+                                    <td ng-model="dl.name">{{dataLayer.dataLayerName}}</td>
+                                    <td ng-model="dl.name">{{dataLayer.requestKeyVal}}</td>
+
+                                    <td align="right"><a href="#/reviewInfo/{{projectId}}/{{dataLayer.id}}"><button
+                                            type="button" class="btn btn-primary"
+                                            ng-click="edit(projectId,dataLayer.id)">edit</button></a> <a href="#/listofdatalayer"><button type="button"
+                                                                            class="btn btn-primary" ng-click="deleteDL(dataLayer)">delete</button></a></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
