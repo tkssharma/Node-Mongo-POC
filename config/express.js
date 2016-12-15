@@ -7,7 +7,8 @@ var compress = require('compression');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
-var config = require('./config')
+var config = require('./config');
+var Error = require('./error');
 
 //============================================================//
 
@@ -49,7 +50,7 @@ module.exports = function() {
 
 
     // set the static files location /public/img will be /img for users
-   // app.use(express.static(__dirname + '../public'));
+    // app.use(express.static(__dirname + '../public'));
     app.use(express.static('./public'));
 
     // routes ==================================================
@@ -57,6 +58,26 @@ module.exports = function() {
 
     // start app ===============================================
     // startup our app at http://localhost:8080
+
+    // error handlers
+
+    // development error handler
+    // will print stacktrace
+    if (app.get('env') === 'development') {
+        app.use(function(err, req, res, next) {
+            var e = new Error(500);
+            e.status = err.status || 500;
+            return ERROR(e, req, res);
+        });
+    }
+
+    // production error handler
+    // no stacktraces leaked to user
+    app.use(function(err, req, res, next) {
+        var e = new Error(500);
+        e.status = err.status || 500;
+        return ERROR(e, req, res);
+    });
 
     return app;
 }

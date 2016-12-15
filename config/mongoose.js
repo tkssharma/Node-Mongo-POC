@@ -29,6 +29,6 @@ module.exports = function() {
             process.exit(0);
         });
     });
-   
+
     return db;
 }

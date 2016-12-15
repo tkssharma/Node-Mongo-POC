@@ -10,6 +10,6 @@ var datalayerSchema = new Schema({
     dataLayer: String,
     reParamKeyVal: String,
     dataLayerName: String,
-    projectId: number
+    projectId: String
 });
 module.exports = mongoose.model('dataLayer', datalayerSchema);
