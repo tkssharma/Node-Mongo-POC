@@ -17,6 +17,7 @@
 
 
 var mainApp = angular.module("mainApp", ['ngRoute','ngStorage']);
+
 mainApp.config(function($routeProvider) {
     $routeProvider
         .when('/dashboard', {

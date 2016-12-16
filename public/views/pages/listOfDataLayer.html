@@ -3,7 +3,7 @@
     -->
 
 <div class="container" ng-app="mainApp" ng-controller="listOfDataLayerController">
-    <div class="row" ng-init="getDataLayers">
+    <div class="row" ng-init="getDataLayers()">
 
         <div class="form-group">
             <div class="btn-container-right">
@@ -40,8 +40,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="dataLayer in page_data_layer">
-                                    <td ng-model="dl.id">{{dataLayer.id}}</td>
+                                <tr ng-repeat="dataLayer in page_data_layer track by $index">
+                                    <td ng-model="dl.id">{{$index+1}}</td>
                                     <td ng-model="dl.name">{{dataLayer.dataLayerName}}</td>
                                     <td ng-model="dl.name">{{dataLayer.requestKeyVal}}</td>
 

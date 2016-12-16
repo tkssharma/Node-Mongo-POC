@@ -28,9 +28,9 @@ Html for Project DashBoard
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="data in Projects">
+                                <tr ng-repeat="data in Projects track by $index">
                                     {{data.projectTitle}}
-                                    <td class="col-sm-2  col-md-2" ng-model="data.projectId">{{ data._id }}</td>
+                                    <td class="col-sm-2  col-md-2" ng-model="data.projectId">{{ $index+1 }}</td>
                                     <td class="col-sm-6" ng-model="data.projectTitle">{{ data.application }}</td>
                                     <td align="right"><a href="#/listofdatalayer"><button
                                         type="button" class="btn btn-primary"

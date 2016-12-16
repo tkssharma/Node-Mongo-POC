@@ -695,9 +695,9 @@ mainApp.controller('dashboardController', function($scope, $http,
     $scope.sendProjectName = function(projectTitle) {
         PageInfoService.sendProjectName(projectTitle);
     }
-    $scope.sendProjectId = function(projectId,projectTitle) {
+    $scope.sendProjectId = function(projectId, projectTitle) {
         PageInfoService.sendProjectId(projectId);
-		PageInfoService.sendProjectName(projectTitle);
+        PageInfoService.sendProjectName(projectTitle);
     }
 
     $scope.deleteproject = function(projId) {
@@ -714,28 +714,33 @@ mainApp.controller('dashboardController', function($scope, $http,
 });
 mainApp.controller('listOfDataLayerController', function($scope, $http,
     PageInfoService, $localStorage, $location) {
+
     $scope.projectId = PageInfoService.getProjectId();
     $scope.projectTitle = PageInfoService.getProjectTitle();
 
     $scope.getDataLayers = function() {
-        $http.get("http://" + $location.host() + ":" + $location.port() + "/" + "ITAG_POC/getProjectDLs/" + $scope.projectId)
-            .success(function(data, status, headers) {
-                if (data) {
-                    $scope.DataJson = data;
-                    var dataLayer_list = [];
-                    for (var i = 0; i < data.length; i++) {
-                        var id = data[i].id;
-                        var requestKeyVal = data[i].reqParamKeyVal;
-                        var dataLayerName = data[i].dataLayerName;
-                        dataLayer_list.push({
-                            "dataLayerName": dataLayerName,
-                            "id": id,
-                            "requestKeyVal": requestKeyVal
-                        });
-                    }
-                    $scope.page_data_layer = dataLayer_list;
+
+        $http.get("api/getDataLayer/" + $scope.projectId)
+
+        .success(function(data, status, headers) {
+            if (data) {
+                $scope.DataJson = data;
+                var dataLayer_list = [];
+                for (var i = 0; i < data.length; i++) {
+                    var id = data[i]._id
+                    var requestKeyVal = data[i].reParamKeyVal;
+                    var dataLayerName = data[i].dataLayerName;
+                    dataLayer_list.push({
+                        "dataLayerName": dataLayerName,
+                        "id": id,
+                        "requestKeyVal": requestKeyVal
+                    });
                 }
-            });
+                $scope.page_data_layer = dataLayer_list;
+            }
+        }).error(function() {
+            console.log('error occured....');
+        });
     }
 
     $scope.deleteDL = function(dataLayer) {

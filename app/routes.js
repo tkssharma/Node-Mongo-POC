@@ -22,7 +22,7 @@ module.exports = function(app) {
             res.json(projects); // return all nerds in JSON format
         });
     });
-
+   // $http.get("/api/projects/" + projectid)
     app.get('/api/projects/:projectId', function(req, res) {
         // use mongoose to get all nerds in the database
         Project.findById(req.params.projectId, function(err, project) {
@@ -36,7 +36,7 @@ module.exports = function(app) {
         });
     });
 
-
+    // changees will be done 
     // route to handle creating Data layer HTTP POST
     app.get('/api/getDataLayer/:projectId', function(req, res) {
         // use mongoose to get all nerds in the database
