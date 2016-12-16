@@ -5,7 +5,7 @@ module.exports = function() {
 
 
     // Create the database connection
-    var db = mongoose.connect(process.env.MONGOLAB_URI || config.db);
+    var db = mongoose.connect(config.db);
 
     // When successfully connected
     mongoose.connection.on('connected', function() {

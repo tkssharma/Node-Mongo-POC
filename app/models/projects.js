@@ -11,7 +11,8 @@ var ProjectSchema = new Schema({
     projectTitle: String,
     country: String,
     businesUnit: String,
-    application: String
+    application: String,
+    dataLayer: [{ type: mongoose.Schema.Types.ObjectId, ref: 'DataLayer' }]
 });
 
 module.exports = mongoose.model('Project', ProjectSchema);

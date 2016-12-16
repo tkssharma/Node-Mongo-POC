@@ -10,6 +10,7 @@ var datalayerSchema = new Schema({
     dataLayer: String,
     reParamKeyVal: String,
     dataLayerName: String,
-    projectId: String
+    projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' }
+
 });
-module.exports = mongoose.model('dataLayer', datalayerSchema);
+module.exports = mongoose.model('DataLayer', datalayerSchema);
