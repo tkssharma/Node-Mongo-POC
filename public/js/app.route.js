@@ -16,7 +16,7 @@
  */
 
 
-var mainApp = angular.module("mainApp", ['ngRoute','ngStorage']);
+var mainApp = angular.module("mainApp", ['ngRoute', 'ngStorage']);
 
 mainApp.config(function($routeProvider) {
     $routeProvider
@@ -25,24 +25,24 @@ mainApp.config(function($routeProvider) {
             controller: 'dashboardController'
 
         }).when('/home', {
-        templateUrl: 'views/pages/home.html',
-        controller: 'homeController'
+            templateUrl: 'views/pages/home.html',
+            controller: 'homeController'
 
-    }).when('/listofdatalayer', {
-        templateUrl: 'views/pages/listOfDataLayer.html',
-        controller: 'listOfDataLayerController'
+        }).when('/listofdatalayer', {
+            templateUrl: 'views/pages/listOfDataLayer.html',
+            controller: 'listOfDataLayerController'
 
-    })
+        })
         .when('/createProject', {
             templateUrl: 'views/pages/createProject.html',
             controller: 'createProjectController'
         })
         .when('/copyProject', {
-            templateUrl : 'views/pages/copyProject.html',
-            controller:'copyProjectController'
+            templateUrl: 'views/pages/copyProject.html',
+            controller: 'copyProjectController'
         })
 
-        .when('/userInfo', {
+    .when('/userInfo', {
             templateUrl: 'views/pages/userInfo.html',
             controller: 'userInfoController'
         })
@@ -55,24 +55,23 @@ mainApp.config(function($routeProvider) {
             controller: 'reviewInfoController'
         })
 
-        .when('/thankyou', {
+    .when('/thankyou', {
             templateUrl: 'views/pages/thankyou.html',
             controller: 'thankyouController'
         })
-        .when('/retrieve',{
-            templateUrl : 'views/pages/retrieve.html',
-            controller:'retrieveDLController'
+        .when('/retrieve', {
+            templateUrl: 'views/pages/retrieve.html',
+            controller: 'retrieveDLController'
         })
-        .when('/homePage',{
-            templateUrl :  'views/pages/homePage.html',
-            controller:'homePageController'
+        .when('/homePage', {
+            templateUrl: 'views/pages/homePage.html',
+            controller: 'homePageController'
         })
-        .when('/publishRules',{
-            templateUrl :  'views/pages/PublishRules.html',
-            controller:'RulesController'
+        .when('/publishRules', {
+            templateUrl: 'views/pages/PublishRules.html',
+            controller: 'RulesController'
         })
         .otherwise({
             redirectTo: '/dashboard'
         });
 });
-
