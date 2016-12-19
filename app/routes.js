@@ -57,23 +57,28 @@ module.exports = function(app) {
         var project = new Project();
         project.projectTitle = req.body.title;
         project.country = req.body.markets;
-        project.businesUnit = req.body.businesUnit;
+        project.businessUnit = req.body.businessUnit;
         project.application = req.body.application;
 
-        project.save(function(err, project) {
-            if (err)
-                res.send(err);
+        // check if project already exist with title 
 
-            console.log(res);
-            res.json(project);
+        if (isprojectExist(req, res)) {
+            project.save(function(err, project) {
+                if (err)
+                    res.send(err);
+                res.json(project);
 
-        });
+            });
+        }
+
+
+
     });
     // route to handle creating Data layer HTTP POST
     app.post('/api/createDataLayer', function(req, res) {
         var dataObject = new DataLayer();
         dataObject.dataLayer = req.body.dataLayer;
-        dataObject.reParamKeyVal = req.body.reParamKeyVal;
+        dataObject.reqParamKeyVal = req.body.reqParamKeyVal;
         dataObject.dataLayerName = req.body.dataLayerName;
         dataObject.projectId = req.body.projectId;
 
@@ -86,6 +91,20 @@ module.exports = function(app) {
 
         });
     });
+
+    function isprojectExist(req, res) {
+        Project.find({ 'projectTitle': req.body.title }, function(err, projectData) {
+            if (err)
+                return false;
+            else if (projectData.length === 0) {
+                return true
+            } else {
+                return false;
+            }
+        });
+    }
+
+    
 
     // route to handle delete goes here (app.delete)
 

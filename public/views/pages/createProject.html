@@ -1,9 +1,7 @@
-
 <!--
 Html for Creating New Project
  -->
-<div class="container form_style" ng-app="mainApp"
-     ng-controller="createProjectController">
+<div class="container form_style" ng-app="mainApp">
     <div class="form-group">
         <div class="btn-container-right">
             <a href="#/dashboard">
@@ -24,8 +22,7 @@ Html for Creating New Project
             <label for="pageName" class="col-sm-4 control-label">Project
                 Title</label>
             <div class="col-sm-7">
-                <input type="text" id="page_name" placeholder="Project Title"
-                       class="form-control" ng-model="project.title" autofocus>
+                <input type="text" id="page_name" placeholder="Project Title" class="form-control" ng-model="project.title" autofocus>
             </div>
             <div class="col-sm-1 asterisk">*</div>
         </div>
@@ -48,8 +45,7 @@ Html for Creating New Project
             <label for="businessUnit" class="col-sm-4 control-label">Business
                 Unit</label>
             <div class="col-sm-7">
-                <select id="country" class="form-control"
-                        ng-model="project.businesUnit">
+                <select id="country" class="form-control" ng-model="project.businessUnit">
                     <!-- <option value="Please Select One">Please Select One</option> -->
                     <option>Acquisition</option>
                     <option>Merchant</option>
@@ -64,8 +60,7 @@ Html for Creating New Project
         <div class="form-group">
             <label for="language" class="col-sm-4 control-label">Application</label>
             <div class="col-sm-7">
-                <select id="language" class="form-control"
-                        ng-model="project.application">
+                <select id="language" class="form-control" ng-model="project.application">
                     <!-- 	<option value="Please Select One">Please Select One</option> -->
                     <option value="application1">application1</option>
                     <option value="application2">application2</option>
@@ -78,8 +73,7 @@ Html for Creating New Project
 
         <div class="form-group">
             <div class="col-sm-4 col-sm-offset-4">
-                <button type="submit" class="btn btn-primary btn-block"
-                        ng-click="createProject(project)">Create</button>
+                <button type="submit" class="btn btn-primary btn-block" ng-click="createProject(project)">Create</button>
                 <!-- </a> -->
 
             </div>

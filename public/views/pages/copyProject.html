@@ -1,4 +1,4 @@
-<div class="container form_style" ng-app="mainApp" ng-controller="copyProjectController">
+<div class="container form_style" ng-app="mainApp">
     <h2 class="form_style_h2">Copy Project</h2>
 
     <form class="form-horizontal" role="form">
@@ -7,11 +7,11 @@
         <div class="form-group">
             <label for="pageName" class="col-sm-4 control-label">Project Title</label>
             <div class="col-sm-7">
-                <input type="text" id="page_name" placeholder="Project Title" class="form-control"
-                       ng-model="project.title" autofocus>
+                <input type="text" id="page_name" placeholder="Project Title" class="form-control" ng-model="project.title" autofocus>
             </div>
             <div class="col-sm-1 asterisk">*</div>
-        </div> <!-- {{page.pageInofrmation.pageName}} -->
+        </div>
+        <!-- {{page.pageInofrmation.pageName}} -->
 
         <!-- <div class="form-group">
              <label for="country code" class="col-sm-4 control-label">Country</label>
@@ -63,7 +63,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <a href="#/dashboard"><button type="submit" class="btn btn-primary btn-block">Back</button></a>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <button type="submit" class="btn btn-primary btn-block" ng-click="copyProject()">Create</button>
                 </div>
 

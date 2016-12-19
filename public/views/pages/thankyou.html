@@ -1,7 +1,7 @@
 <!--
 Html for Thankyou page after DataLayer creation
  -->
-<div class="container" ng-controller="thankyouController">
+<div class="container">
     <div class="form-group">
         <div class="btn-container-right">
             <a href="#/dashboard">
@@ -25,11 +25,10 @@ Html for Thankyou page after DataLayer creation
             <ul class="list-unstyled">
                 <li>
                     <ul>
-                        <li>Hit the following url
-                            http://10.17.152.41:18080/ITAG_POC/getDataLayer?</li>
+                        <li>Hit the following url http://10.17.152.41:18080/ITAG_POC/getDataLayer?
+                        </li>
                         <li>Pass the parameters --> <span class="thankyouparam">{{$s_storage.reqParams}}</span></li>
-                        <li>Ex: https://10.17.152.41:18080/getDataLayer?<span
-                                class="thankyouparam">{{$s_storage.reqParams}}</span></li>
+                        <li>Ex: https://10.17.152.41:18080/getDataLayer?<span class="thankyouparam">{{$s_storage.reqParams}}</span></li>
                         <li>hit the url</li>
                     </ul>
                 </li>
@@ -46,7 +45,8 @@ Html for Thankyou page after DataLayer creation
                     <ul>
                         <li>Hit the following url
                             http://host:port/ITAG_POC/updateDataLayer?</li>
-                        <li>Pass the parameters --> <!-- <span class="thankyouparam">{{
+                        <li>Pass the parameters -->
+    <!-- <span class="thankyouparam">{{
 								$s_storage.reqParams }}</span>
 						</li>
 						<li>Pass the modified Data Layer json in body</li>

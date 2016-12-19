@@ -5,13 +5,17 @@
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
-//autoIncrement = require('mongoose-auto-increment');
+var AutoIncrement = require('mongoose-sequence');
+
+
+//mongoose.plugin(AutoIncrement);
 
 var ProjectSchema = new Schema({
     projectTitle: String,
     country: String,
-    businesUnit: String,
+    businessUnit: String,
     application: String
 });
+ProjectSchema.plugin(AutoIncrement, { inc_field: 'id' });
 
 module.exports = mongoose.model('Project', ProjectSchema);

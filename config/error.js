@@ -42,5 +42,5 @@ module.exports = function(err, req, res, next) {
             console.log(err.stack);
         } catch (ex) {}
     }
-    res.status(errorStatus).json(response);
+    res.json(response);
 };

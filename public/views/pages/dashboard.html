@@ -1,7 +1,7 @@
 <!--
 Html for Project DashBoard
  -->
-<div class="container" ng-app="mainApp" ng-controller="dashboardController">
+<div class="container">
     <h2 class="form_style_h2" align="center">Project Dashboard</h2>
     <div class="row" ng-init="getProjects()">
         <!--  -->
@@ -29,9 +29,10 @@ Html for Project DashBoard
                             </thead>
                             <tbody>
                                 <tr ng-repeat="data in Projects track by $index">
-                                    {{data.projectTitle}}
-                                    <td class="col-sm-2  col-md-2" ng-model="data.projectId">{{ $index+1 }}</td>
-                                    <td class="col-sm-6" ng-model="data.projectTitle">{{ data.application }}</td>
+                                    <td class="col-sm-2" ng-model="data.businessUnit">{{ data.businessUnit }}</td>
+                                    <td class="col-sm-2  col-md-2" ng-model="data.id">{{data.id}}</td>
+                                    <td class="col-sm-2" ng-model="data.projectTitle">{{ data.application }}</td>
+                                    <td class="col-sm-2" ng-model="data.country">{{ data.country }}</td>
                                     <td align="right"><a href="#/listofdatalayer"><button
                                         type="button" class="btn btn-primary"
                                         ng-click="sendProjectId(data._id,data.application)">Details</button></a>

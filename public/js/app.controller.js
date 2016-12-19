@@ -734,12 +734,14 @@
                     $scope.DataJson = data;
                     var dataLayer_list = [];
                     for (var i = 0; i < data.length; i++) {
-                        var id = data[i]._id
-                        var requestKeyVal = data[i].reParamKeyVal;
+                        var _id = data[i]._id
+                        var pid = data[i].pid
+                        var requestKeyVal = data[i].reqParamKeyVal;
                         var dataLayerName = data[i].dataLayerName;
                         dataLayer_list.push({
                             "dataLayerName": dataLayerName,
-                            "id": id,
+                            "id": _id,
+                            "pid" : pid,
                             "requestKeyVal": requestKeyVal
                         });
                     }

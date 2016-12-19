@@ -2,7 +2,7 @@
     Html for showing listof DataLayers
     -->
 
-<div class="container" ng-app="mainApp" ng-controller="listOfDataLayerController">
+<div class="container" ng-app="mainApp">
     <div class="row" ng-init="getDataLayers()">
 
         <div class="form-group">
@@ -41,7 +41,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="dataLayer in page_data_layer track by $index">
-                                    <td ng-model="dl.id">{{$index+1}}</td>
+                                    <td ng-model="dl.pid">{{dataLayer.pid}}</td>
                                     <td ng-model="dl.name">{{dataLayer.dataLayerName}}</td>
                                     <td ng-model="dl.name">{{dataLayer.requestKeyVal}}</td>
 

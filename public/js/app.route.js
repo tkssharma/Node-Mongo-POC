@@ -24,23 +24,25 @@ mainApp.config(function($routeProvider) {
             templateUrl: 'views/pages/dashboard.html',
             controller: 'dashboardController'
 
-        }).when('/home', {
-            templateUrl: 'views/pages/home.html',
-            controller: 'homeController'
-
-        }).when('/listofdatalayer', {
-            templateUrl: 'views/pages/listOfDataLayer.html',
-            controller: 'listOfDataLayerController'
-
         })
         .when('/createProject', {
             templateUrl: 'views/pages/createProject.html',
             controller: 'createProjectController'
         })
-        .when('/copyProject', {
-            templateUrl: 'views/pages/copyProject.html',
-            controller: 'copyProjectController'
-        })
+
+    .when('/home', {
+        templateUrl: 'views/pages/home.html',
+        controller: 'homeController'
+
+    }).when('/listofdatalayer', {
+        templateUrl: 'views/pages/listOfDataLayer.html',
+        controller: 'listOfDataLayerController'
+    })
+
+    .when('/copyProject', {
+        templateUrl: 'views/pages/copyProject.html',
+        controller: 'copyProjectController'
+    })
 
     .when('/userInfo', {
             templateUrl: 'views/pages/userInfo.html',

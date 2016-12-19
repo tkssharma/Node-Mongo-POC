@@ -60,7 +60,7 @@ mainApp.service('PageInfoService', function($http, $location, $timeout, $q) {
 	    		  alert("Project created");
 	    		  $location.path('/listofdatalayer');
 	    	  },100);
-	        }).error(function(data, status){
+	        }).catch(function(data, status){
 	         $location.path('/createProject');
 	         alert("There is an error while adding data with duplicate Project name");
 	        
