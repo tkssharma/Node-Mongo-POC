@@ -788,7 +788,7 @@
 
             var copiedProject;
 
-            PageInfoService.retrieveProjectById($location.host(), $location.port(), $scope.projectId)
+            PageInfoService.retrieveProjectById( $scope.projectId)
                 .then(
                     function(retrieveresult) {
                         // promise was fullfilled (regardless of outcome)
@@ -799,14 +799,15 @@
                         if (retrieveresult) {
                             copiedProject = retrieveresult;
 
-                            $scope.markets = copiedProject.markets;
+                            $scope.markets = copiedProject.country;
                             $scope.businessUnit = copiedProject.businessUnit;
                             $scope.application = copiedProject.application;
+                            $scope.copiedProjectTitle = copiedProject.projectTitle;
                             var copiedDL = "";
                             var reqParamKeyVal = "";
                             var DLsuccess = "";
 
-                            PageInfoService.copyProject($location.host(), $location.port(),
+                            PageInfoService.copyProject(
                                     $scope.copiedProjectTitle, $scope.markets, $scope.businessUnit, $scope.application)
                                 .then(
                                     function(copyresult) {
@@ -819,7 +820,7 @@
 
                                         console.log("Copying DLs from " + $scope.projectId + " to " + copiedProjectId);
 
-                                        PageInfoService.copyProjectDLs($location.host(), $location.port(), $scope.projectId, copiedProjectId)
+                                        PageInfoService.copyProjectDLs($scope.projectId, copiedProjectId)
                                             .then(
                                                 function(copyDLresult) {
                                                     // promise was fullfilled (regardless of outcome)
