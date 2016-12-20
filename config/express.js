@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var config = require('./config');
-var Error = require('./error');
+var ERROR = require('./error');
 
 //============================================================//
 
@@ -63,7 +63,7 @@ module.exports = function() {
 
     // development error handler
     // will print stacktrace
-    if (app.get('env') === 'development') {
+    /*if (app.get('env') === 'development') {
         app.use(function(err, req, res, next) {
             var e = new Error(500);
             e.status = err.status || 500;
@@ -77,7 +77,7 @@ module.exports = function() {
         var e = new Error(500);
         e.status = err.status || 500;
         return ERROR(e, req, res);
-    });
+    });  */
 
     return app;
 }

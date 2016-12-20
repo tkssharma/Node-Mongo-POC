@@ -73,6 +73,10 @@ mainApp.config(function($routeProvider) {
             templateUrl: 'views/pages/PublishRules.html',
             controller: 'RulesController'
         })
+        .when('/reviewInfo/:projectId/:dataLayerId', {
+            templateUrl: 'views/pages/reviewInfo.html',
+            controller: 'reviewInfoController'
+        })
         .otherwise({
             redirectTo: '/dashboard'
         });

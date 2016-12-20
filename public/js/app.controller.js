@@ -339,7 +339,7 @@
     });
 
     mainApp.controller('reviewInfoController', function($scope, $http,
-        PageInfoService, $localStorage, $location, $sessionStorage) {
+        PageInfoService, $localStorage, $location, $sessionStorage, $routeParams) {
 
         $scope.dissabledVal = true;
         $scope.disable = true;
@@ -351,8 +351,8 @@
         $scope.checkBoxDisable = true;
 
 
-        document.getElementById('Request_Parameter1_key').disabled = false;
-        document.getElementById('Request_Parameter1_value').disabled = false;
+        // document.getElementById('Request_Parameter1_key').disabled = false;
+        //document.getElementById('Request_Parameter1_value').disabled = false;
 
         if ($location.$$url.split('/')[2] != undefined) {
 
@@ -363,19 +363,19 @@
             $scope.disablePageName = false;
             $scope.disable_productName = false;
             $scope.disable_pmc = false;
-            document.getElementById('Request_Parameter1_key').disabled = false;
-            document.getElementById('Request_Parameter1_value').disabled = false;
+            //document.getElementById('Request_Parameter1_key').disabled = false;
+            //document.getElementById('Request_Parameter1_value').disabled = false;
             $scope.backButton = '#/listofdatalayer';
 
-            $http.get("http://" + $location.host() + ":" + $location.port() + "/" + "ITAG_POC/getProjectSpecficDLs/" + $location.$$url.split('/')[2] + "/+" + $location.$$url.split('/')[3])
+            $http.get("/api/getProjectSpecDataLayer/" + $routeParams.projectId + "/" + $routeParams.dataLayerId)
                 .success(function(data, status, headers, response) {
                     if (data) {
 
-                        $scope.DataJson = data[0];
+                        $scope.DataJson = data;
 
                         console.log($scope.DataJson);
-                        if (JSON.parse(data[0].dataLayer).event != undefined) {
-                            var radioValue = JSON.parse(JSON.stringify(JSON.parse(data[0].dataLayer).event).substring(1, JSON.stringify(JSON.parse(data[0].dataLayer).event).length - 1)).eventInfo.eventAction;
+                        if (JSON.parse(data.dataLayer).event != undefined) {
+                            var radioValue = JSON.parse(JSON.stringify(JSON.parse(data.dataLayer).event).substring(1, JSON.stringify(JSON.parse(data.dataLayer).event).length - 1)).eventInfo.eventAction;
 
                             if (radioValue == 'start') {
                                 $scope.radioButtonShow = 'CA_Start';
@@ -388,18 +388,18 @@
                             }
 
 
-                            var pmc = JSON.parse(JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data[0].dataLayer).event).substring(1, JSON.stringify(JSON.parse(data[0].dataLayer).event).length - 1)).productInfo).substring(1, JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data[0].dataLayer).event).substring(1, JSON.stringify(JSON.parse(data[0].dataLayer).event).length - 1)).productInfo).length - 1)).pmc;
-                            var productName = JSON.parse(JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data[0].dataLayer).event).substring(1, JSON.stringify(JSON.parse(data[0].dataLayer).event).length - 1)).productInfo).substring(1, JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data[0].dataLayer).event).substring(1, JSON.stringify(JSON.parse(data[0].dataLayer).event).length - 1)).productInfo).length - 1)).productName;
-                            $scope.selectedData = JSON.parse(data[0].dataLayer);
-                            $scope.selectedDatas = JSON.parse(data[0].dataLayer);
-                            $scope.selectedDatas.event = JSON.parse(data[0].dataLayer).event;
-                            $scope.selectedDatas.event.productInfo = JSON.parse(JSON.stringify(JSON.parse(data[0].dataLayer).event).substring(1, JSON.stringify(JSON.parse(data[0].dataLayer).event).length - 1)).productInfo;
+                            var pmc = JSON.parse(JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data.dataLayer).event).substring(1, JSON.stringify(JSON.parse(data.dataLayer).event).length - 1)).productInfo).substring(1, JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data.dataLayer).event).substring(1, JSON.stringify(JSON.parse(data.dataLayer).event).length - 1)).productInfo).length - 1)).pmc;
+                            var productName = JSON.parse(JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(datadataLayer).event).substring(1, JSON.stringify(JSON.parse(data[0].dataLayer).event).length - 1)).productInfo).substring(1, JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data[0].dataLayer).event).substring(1, JSON.stringify(JSON.parse(data.dataLayer).event).length - 1)).productInfo).length - 1)).productName;
+                            $scope.selectedData = JSON.parse(data.dataLayer);
+                            $scope.selectedDatas = JSON.parse(data.dataLayer);
+                            $scope.selectedDatas.event = JSON.parse(data.dataLayer).event;
+                            $scope.selectedDatas.event.productInfo = JSON.parse(JSON.stringify(JSON.parse(data.dataLayer).event).substring(1, JSON.stringify(JSON.parse(data[0].dataLayer).event).length - 1)).productInfo;
                             $scope.selectedDatas.event.productInfo.pmc = pmc;
                             $scope.selectedDatas.event.productInfo.productName = productName;
 
 
                         }
-                        $scope.selectedData = JSON.parse(data[0].dataLayer);
+                        $scope.selectedData = JSON.parse(data.dataLayer);
 
                         if (pmc == '') {
                             $scope.disable_pmc = true;
@@ -415,26 +415,26 @@
                         }
 
 
-                        $scope.dataLayerName = data[0].dataLayerName;
-                        if (data[0].reqParamKeyVal.split('=')[0] == undefined || data[0].reqParamKeyVal.split('=')[1] == undefined) {
-                            document.getElementById('Request_Parameter1_key').disabled = false;
-                            document.getElementById('Request_Parameter1_value').disabled = false;
+                        $scope.dataLayerName = data.dataLayerName;
+                        if (data.reqParamKeyVal.split('=')[0] == undefined || data.reqParamKeyVal.split('=')[1] == undefined) {
+                            //document.getElementById('Request_Parameter1_key').disabled = false;
+                            //document.getElementById('Request_Parameter1_value').disabled = false;
 
                         }
-                        data[0].reqParamKeyVal = data[0].reqParamKeyVal.split('&').join('=');
+                        data.reqParamKeyVal = data.reqParamKeyVal.split('&').join('=');
                         $scope.selectedDataRP = {};
                         $scope.selectedDataRP.Request_Parameter1 = {};
-                        $scope.selectedDataRP.Request_Parameter1.key = data[0].reqParamKeyVal.split('=')[0]
-                        $scope.selectedDataRP.Request_Parameter1.value = data[0].reqParamKeyVal.split('=')[1]
+                        $scope.selectedDataRP.Request_Parameter1.key = data.reqParamKeyVal.split('=')[0]
+                        $scope.selectedDataRP.Request_Parameter1.value = data.reqParamKeyVal.split('=')[1]
                         $scope.selectedDataRP.Request_Parameter2 = {};
-                        $scope.selectedDataRP.Request_Parameter2.key = data[0].reqParamKeyVal.split('=')[2]
-                        $scope.selectedDataRP.Request_Parameter2.value = data[0].reqParamKeyVal.split('=')[3]
+                        $scope.selectedDataRP.Request_Parameter2.key = data.reqParamKeyVal.split('=')[2]
+                        $scope.selectedDataRP.Request_Parameter2.value = data.reqParamKeyVal.split('=')[3]
                         $scope.selectedDataRP.Request_Parameter3 = {};
-                        $scope.selectedDataRP.Request_Parameter3.key = data[0].reqParamKeyVal.split('=')[4]
-                        $scope.selectedDataRP.Request_Parameter3.value = data[0].reqParamKeyVal.split('=')[5]
+                        $scope.selectedDataRP.Request_Parameter3.key = data.reqParamKeyVal.split('=')[4]
+                        $scope.selectedDataRP.Request_Parameter3.value = data.reqParamKeyVal.split('=')[5]
 
 
-                        $scope.jsonData = JSON.parse(data[0].dataLayer);
+                        $scope.jsonData = JSON.parse(data.dataLayer);
 
                         if ($scope.selectedDataRP.Request_Parameter2.key !== undefined) {
                             $scope.addRP2();
@@ -443,11 +443,11 @@
                             $scope.addRP3();
                         }
 
-                        if (JSON.parse(data[0].dataLayer).page.attributes.intlinkimp != undefined) {
-                            $scope.intlinkimp = JSON.parse(data[0].dataLayer).page.attributes.intlinkimp;
+                        if (JSON.parse(data.dataLayer).page.attributes.intlinkimp != undefined) {
+                            $scope.intlinkimp = JSON.parse(data.dataLayer).page.attributes.intlinkimp;
                             $scope.intliCheck = true;
                         }
-                        if (JSON.parse(data[0].dataLayer).page.attributes.intlinkimp == "") {
+                        if (JSON.parse(data.dataLayer).page.attributes.intlinkimp == "") {
                             $scope.intliCheck = false;
                         }
                         $localStorage.dataJSon = $scope.selectedData;
@@ -547,9 +547,10 @@
                     $scope.reqParam = $scope.reqParamKey1 + "=" + $scope.reqParamVal1;
                 }
                 //
-                if ($location.$$url.split('/')[2] != undefined) {
+                if ($routeParams.dataLayerId != undefined) {
                     $scope.editReviewInfo();
-                    PageInfoService.updateDL($location.host(), $location.port(), JSON.stringify($scope.selectedData), $scope.reqParam, $location.$$url.split('/')[3], $scope.dataLayerName, $location.$$url.split('/')[2]);
+
+                    PageInfoService.updateDL(JSON.stringify($scope.selectedData), $scope.reqParam, $routeParams.dataLayerId, $scope.dataLayerName, $routeParams.projectId);
                 } else {
                     $scope.data = {
                         'dataLayer': $scope.dataLayer,
@@ -741,7 +742,7 @@
                         dataLayer_list.push({
                             "dataLayerName": dataLayerName,
                             "id": _id,
-                            "pid" : pid,
+                            "pid": pid,
                             "requestKeyVal": requestKeyVal
                         });
                     }

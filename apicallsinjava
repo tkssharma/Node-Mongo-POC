@@ -1,252 +1,252 @@
 /**
-* <h1>ITagController File!</h1>
-* ItagController performs actions like saving ,getting and updating datalayers.
-* It also functinality for creating project and getting project
-* <p>
-* <b>Note:</b> Giving proper comments in your program makes it more
-* user friendly and it is assumed as a high quality code.
-*
-* @author :Ramesh,Siddartha,Bhagirath
-* @version 1.0
-* @since   2016-09-08
-*/
+ * Created by sidhu on 12/13/2016.
+ */
+var Project = require('./models/projects');
+var DataLayer = require('./models/dataLayer');
 
-package com.amex.itag.controller;
+module.exports = function(app) {
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+    // server routes ===========================================================
+    // handle things like api calls
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
+    // sample api route
+    app.get('/api/projects', function(req, res) {
+        // use mongoose to get all nerds in the database
+        Project.find(function(err, projects) {
+            console.log('Inside projects.');
+            // if there is an error retrieving, send the error.
+            // nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
 
-import com.amex.itag.model.ITagUser;
-import com.amex.itag.model.Projects;
-import com.amex.itag.service.ITagUserService;
-import com.amex.itag.util.DuplicateParameters;
+            res.json(projects); // return all nerds in JSON format
+        });
+    });
+    // $http.get("/api/projects/" + projectid)
+    app.get('/api/projects/:projectId', function(req, res) {
+        // use mongoose to get all nerds in the database
+        Project.findById(req.params.projectId, function(err, project) {
+            console.log('Inside projects.');
+            // if there is an error retrieving, send the error.
+            // nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
 
-@RestController
-public class ITagController {
-	
-	final static Logger logger = Logger.getLogger(ITagController.class);
-	
-	public final static String EQUALS = new String("=");
-	
-	public final static String AMP = new String("&");
+            res.json(project); // return all nerds in JSON format
+        });
+    });
+    // delete project by project Id
 
-	@Autowired
-	private ITagUserService iTagUserService;
-	
-	//This Controller for Saving DataLayer.
-	
-	@RequestMapping(value = "/saveITagData", method = RequestMethod.POST)
-	public @ResponseBody void saveITagData(@RequestBody ITagUser iTagUser) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("saveITagData is executed!");
-		}
-		String keyValParam = sortKeyVal(iTagUser.getReqParamKeyVal()).toLowerCase();
-		iTagUser.setReqParamKeyVal(keyValParam);
-		if (!(keyValParam.equals(""))) {
-			if (!(isDataExist(iTagUser))) {
-				iTagUserService.create(iTagUser);
-			} else {
-				throw new DuplicateParameters();
-			}
-		} else {
-			iTagUserService.create(iTagUser);
-		}
+    app.delete('/api/deleteProjects/:projectId', function(req, res) {
+        // use mongoose to get all nerds in the database
+        DataLayer.remove({ 'projectId': req.params.projectId }, function(err, dataLayers) {
+            // if there is an error retrieving, send the error.
+            // nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
+            res.json(dataLayers); // return all nerds in JSON format
+        });
+    });
 
-	}
-	
-	//This Controller for Getting all DataLayers.
-	
-	@RequestMapping(value = "/getAllDataLayer", method = RequestMethod.GET, produces = "application/json")
-	public List<ITagUser> getITagData() {
-		return iTagUserService.findAll();
-	}
-	//This Controller for Getting specific DataLayer with passing RequestParameters.
-	@RequestMapping(value = "/getDataLayer", method = RequestMethod.GET, produces = "application/json")
-	public String getITagDataLayer(WebRequest wr) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("getITagFirstKeyValData is started!");
-		}
-		String dataLayer;
-		String reqParamKey1;
-		String reqParamVal1;
-		String reqParamKey2;
-		String reqParamVal2;
-		String reqParamKey3;
-		String reqParamVal3;
-		String reqParamKeyVal;
-		HashMap<String, String[]> params = (HashMap<String, String[]>) wr.getParameterMap();
-		if (params.size() == 1) {
-			for (Map.Entry<String, String[]> param : params.entrySet()) {
-				reqParamKey1 = param.getKey().toLowerCase();
-				reqParamVal1 = param.getValue()[0].toLowerCase();
-				reqParamKeyVal = reqParamKey1 + "=" + reqParamVal1;
-				dataLayer = iTagUserService.find(reqParamKeyVal);
-				return dataLayer;
-			}
-		} else if (params.size() == 2) {
-			reqParamKey1 = ((String) params.keySet().toArray()[0]).toLowerCase();
-			reqParamVal1 = ((String[]) params.values().toArray()[0])[0].toLowerCase();
-			reqParamKey2 = ((String) params.keySet().toArray()[1]).toLowerCase();
-			reqParamVal2 = ((String[]) params.values().toArray()[1])[0].toLowerCase();
-			reqParamKeyVal = sortKeyVal(
-					reqParamKey1 + EQUALS + reqParamVal1 + AMP + reqParamKey2 + EQUALS + reqParamVal2);
-			dataLayer = iTagUserService.find(reqParamKeyVal);
-			return dataLayer;
-		} else if (params.size() == 3) {
-			reqParamKey1 = ((String) params.keySet().toArray()[0]).toLowerCase();
-			reqParamVal1 = ((String[]) params.values().toArray()[0])[0].toLowerCase();
-			reqParamKey2 = ((String) params.keySet().toArray()[1]).toLowerCase();
-			reqParamVal2 = ((String[]) params.values().toArray()[1])[0].toLowerCase();
-			reqParamKey3 = ((String) params.keySet().toArray()[2]).toLowerCase();
-			reqParamVal3 = ((String[]) params.values().toArray()[2])[0].toLowerCase();
-			reqParamKeyVal = sortKeyVal(reqParamKey1 + EQUALS + reqParamVal1 + AMP + reqParamKey2 + EQUALS
-					+ reqParamVal2 + AMP + reqParamKey3 + EQUALS + reqParamVal3);
-			dataLayer = iTagUserService.find(reqParamKeyVal);
-			return dataLayer;
-		}
-		return null;
-	}
-	
-	//This Controller for Updating specific DataLayer on click of edit function.
+    // Delete All projects
+    app.delete('/api/deleteAllProjects', function(req, res) {
+        // use mongoose to get all nerds in the database
+        DataLayer.remove({}, function(err, dataLayers) {
+            // if there is an error retrieving, send the error.
+            // nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
+            res.json(dataLayers); // return all nerds in JSON format
+        });
+    });
+    // Get project based on ProjId
+    app.get('/api/getDataLayer/:projectId', function(req, res) {
+        // use mongoose to get all nerds in the database
+        DataLayer.find({ 'projectId': req.params.projectId }, function(err, dataLayers) {
+            // if there is an error retrieving, send the error.
+            // nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
 
-	 @RequestMapping(value = "/updateDataLayer", method = RequestMethod.POST)
-	    public @ResponseBody void updateDataLayer(@RequestBody ITagUser iTagUser) {
-	          if(logger.isDebugEnabled()){
-	                 logger.debug("getITagFirstKeyValData is started!");
-	          }
-	          String message = null;
-	          if (null!=iTagUser.getProjectId()) {
-	                 iTagUserService.update(iTagUser.getDataLayer(), iTagUser.getDataLayerName(), iTagUser.getReqParamKeyVal(), iTagUser.getId());
-	          }
-	          else
-	          {
-	                 throw new DuplicateParameters();
+            res.json(dataLayers); // return all nerds in JSON format
+        });
+    });
+    // Get project based on ProjTitle
+    app.get('/api/getDataLayer/:projectTitle', function(req, res) {
+        // use mongoose to get all nerds in the database
+        Project.find({ 'projectTitle': req.params.projectTitle }, function(err, project) {
+            // if there is an error retrieving, send the error.
+            // nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
 
-	          }
-	    }
-	 
-	 
-	 //This Controller for Publish Rules to Akamai
-	 
-	 @RequestMapping(value = "/getPublishedDataLayer", method = RequestMethod.GET, produces = "application/json")
-		public String getPublishedDataLayer(WebRequest wr) {
-		 	
-			return null;
-			
-		}
+            res.json(project); // return all nerds in JSON format
+        });
+    });
 
-	//This Controller for Saving new project.
-	
-	 @RequestMapping(value = "/saveITagProject", method = RequestMethod.POST)
-		public @ResponseBody Projects saveITagProject(@RequestBody Projects iTagProject) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("saveITagData is executed!");
-			}
-			String projectTitle = iTagProject.getProjectTitle();
-			if (null != projectTitle) {
-				Projects targetProject= iTagUserService.saveProject(iTagProject);
-				return targetProject;
-			}
-			
-			
-			return null;
 
-		}
-	//This Controller for getting all Projects.
-	@RequestMapping(value = "/getAllProjects", method = RequestMethod.GET, produces = "application/json")
-	public List<Projects> getITagProjects() {
-		return iTagUserService.findAllProjects();
-	}
 
-	//This Controller for get specfic project by ProjectTitle.
-	@RequestMapping(value = "/getProjectByTitle/{projectTitle}", method = RequestMethod.GET, produces = "application/json")
-	public List<Projects> getProjByTitle(@PathVariable("projectTitle") String projectTitle) {
-		if (null != projectTitle) {
-			return iTagUserService.findProjectByTitle(projectTitle);
-		} else {
-			return null;
-		}
-	}
-	
-	//This Controller for get specfic project all datalayers by ProjectTitle.
-	@RequestMapping(value = "/getProjectDLs/{projectId}", method = RequestMethod.GET, produces = "application/json")
-	public List<ITagUser> getProjectDLs(@PathVariable("projectId") Integer projectId) {
-		if (null != projectId) {
-			return iTagUserService.findDataLayers(projectId);
-		} else {
-			return null;
-		}
-	}
-	
-	//This Controller for get specfic project specific datalayers by ProjectTitle.
-	@RequestMapping(value = "/getProjectSpecficDLs/{projectId}/{id}", method = RequestMethod.GET, produces = "application/json")
-	public List<ITagUser> getProjSpecficDLs(@PathVariable("projectId") Integer projectId,
-			@PathVariable("id") Integer id) {
-		if (null != projectId & null != id) {
-			return iTagUserService.findDLBySpecficRequestParam(projectId, id);
-		} else {
-			return null;
-		}
-	}
-	//This Controller for delete Datalayer by Id.
-	@RequestMapping(value = "/deleteDL/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public ITagUser delete(@PathVariable("id") Integer id) {
-		if (null != id) {
-			return iTagUserService.delete(id);
-		} else {
-			return null;
-		}
-	}
-	
-	@RequestMapping(value = "/deleteProject/{projectId}", method = RequestMethod.DELETE, produces = "application/json")
-		public void deleteProject(@PathVariable("projectId") Integer projectId) {
-			if (null != projectId) {
-				iTagUserService.deleteProject(projectId);
-			}
-		}
+    // create Data Layer 
 
-	
-	//This Controller delete all the Projects in database 
-	@RequestMapping(value = "/deleteAllProjects", method = RequestMethod.POST)
-	public  @ResponseBody String deleteAll(WebRequest wr) {
-			iTagUserService.deleteAll();
-			return "Success";
-	}
-	
-	//This Controller for get datalayers by Id.
-	@RequestMapping(value = "/findById/{id}", method = RequestMethod.GET, produces = "application/json")
-	public ITagUser findById(@PathVariable("id") Integer id) {
-		if (null != id) {
-			return iTagUserService.findById(id);
-		} else {
-			return null;
-		}
-	}
-	
-	@RequestMapping(value = "/getDLById/{id}", method = RequestMethod.GET, produces = "application/json")
-	public String getDLById(@PathVariable("id") Integer id) {
-		if (null != id) {
-			return iTagUserService.getDLById(id);
-		} else {
-			return null;
-		}
-	}
-	
-	@RequestMapping(value = "/getProjectById/{projectId}", method = RequestMethod.GET, produces = "application/json")
-	public Projects getProjById(@PathVariable("projectId") Integer projectId) {
-		if (null != projectId) {
+    // route to handle creating goes here (app.post)
+    app.post('/api/projects', function(req, res) {
+        var project = new Project();
+        project.projectTitle = req.body.title;
+        project.country = req.body.markets;
+        project.businessUnit = req.body.businessUnit;
+        project.application = req.body.application;
+
+        // check if project already exist with title 
+
+        if (isprojectExist(req, res)) {
+            project.save(function(err, project) {
+                if (err)
+                    res.send(err);
+                res.json(project);
+
+            });
+        }
+    });
+    // route to handle creating Data layer HTTP POST
+    app.post('/api/createDataLayer', function(req, res) {
+
+        var keyValParam = sortKeyVal(req.body.reqParamKeyVal).toLowerCase();
+        if (!(keyValParam.equals(""))) {
+            if (!(isDataExist(req.body.reqParamKeyVal))) {
+                createDataLayer(req, res);
+            } else {
+                res.send(new Error('duplicate exists'));
+            }
+        } else {
+            createDataLayer(req, res);
+        }
+    });
+
+    function createDataLayer(req, res) {
+        var dataObject = new DataLayer();
+        dataObject.dataLayer = req.body.dataLayer;
+        dataObject.reqParamKeyVal = req.body.reqParamKeyVal;
+        dataObject.dataLayerName = req.body.dataLayerName;
+        dataObject.projectId = req.body.projectId;
+
+        dataObject.save(function(err, dataLayer) {
+            if (err)
+                res.send(err);
+
+            console.log(res);
+            res.json(dataLayer);
+
+        });
+    }
+    // get Data layer by id
+    app.get('/api/getDataLayer/:layerId', function(req, res) {
+        // use mongoose to get all nerds in the database
+        DataLayer.findById(req.params.layerId, function(err, dataLayer) {
+            console.log('Inside projects.');
+            // if there is an error retrieving, send the error.
+            // nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
+
+            res.json(dataLayer);
+        });
+    });
+    // delete data layer By ID
+    app.delete('/api/deleteDataLayer/:layerId', function(req, res) {
+        // use mongoose to get all nerds in the database
+        DataLayer.remove(req.params.layerId, function(err, dataLayer) {
+            console.log('Inside projects.');
+            // if there is an error retrieving, send the error.
+            // nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
+
+            res.json(dataLayer);
+        });
+    });
+
+
+    // get Data layer based on Project Title
+    app.get('/api/getDataLayer/:projectTitle', function(req, res) {
+        // use mongoose to get all nerds in the database
+        Project.findById({ 'projectTitle': req.params.projectTitle }, function(err, project) {
+            console.log('Inside projects.');
+            // if there is an error retrieving, send the error.
+            // nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
+            DataLayer.findById(project._id, function(err, dataLayers) {
+                if (err)
+                    res.send(err);
+                res.json(dataLayers);
+            });
+        });
+    });
+
+    // get All data Layer
+    app.get('/api/getAllDataLayer', function(req, res) {
+        // use mongoose to get all nerds in the database
+        DataLayer.find({}, function(err, DataLayers) {
+            if (err)
+                res.send(err);
+            res.send(DataLayers)
+        });
+    });
+
+    ////This API for Getting specific DataLayer with passing RequestParameters.
+
+
+
+
+    function isprojectExist(req, res) {
+        Project.find({ 'projectTitle': req.body.title }, function(err, projectData) {
+            if (err)
+                return false;
+            else if (projectData.length === 0) {
+                return true
+            } else {
+                return false;
+            }
+        });
+    }
+
+    function isDataExist(reqParamKeyVal) {
+        DataLayer.find({ 'reqParamKeyVal': reqParamKeyVal }, function(err, data) {
+            if (err) {
+                return false;
+            } else if (data.length === 0) {
+                return false
+            } else {
+                return true;
+            }
+        });
+    }
+
+    function sortKeyVal(ketValParam) {
+        var parts = ketValParam.split("&");
+        Arrays.sort(parts);
+        var sortKeyVal = "";
+        for (var i = 0; i < parts.length; i++) {
+            if (i == 0) {
+                sortKeyVal = sortKeyVal + parts[i];
+            } else {
+                sortKeyVal = sortKeyVal + "&" + parts[i];
+            }
+        }
+        return sortKeyVal;
+    }
+
+
+
+    // route to handle delete goes here (app.delete)
+
+    // frontend routes =========================================================
+    // route to handle all angular requests
+    app.get('*', function(req, res) {
+        res.sendfile('./public/index.html'); // load our public/index.html file
+    });
+
+};if (null != projectId) {
 			return iTagUserService.findProjectById(projectId);
 		}
 		else 
