@@ -103,10 +103,10 @@ mainApp.service('PageInfoService', function($http, $location, $timeout, $q) {
             return deferredProjectId;
         },
 
-        this.retrieveProjectById = function(host, port, rProjectId) {
+        this.retrieveProjectById = function(rProjectId) {
             console.log("retrieveProjectById for id:" + rProjectId);
             //$http.get("http://" + $location.host() + ":" + $location.port() + "/" +"ITAG_POC/getProjectById/"+$scope.projectId)
-            return $http.get("http://" + host + ":" + port + "/" + "ITAG_POC/getProjectById/" + rProjectId)
+            return $http.get("/api/projects/" + rProjectId)
                 .then(function(response) {
                     console.log("retrieveProjectById Promise fulfilled");
                     // promise is fulfilled
@@ -120,9 +120,9 @@ mainApp.service('PageInfoService', function($http, $location, $timeout, $q) {
                 });
         },
 
-        this.copyProject = function(host, port, projectTitle, markets, businessUnit, application) {
+        this.copyProject = function(projectTitle, markets, businessUnit, application) {
             console.log("copyProject as:" + projectTitle);
-            return $http.post("http://" + host + ":" + port + "/" + "ITAG_POC/saveITagProject", { 'projectTitle': projectTitle, 'markets': markets, 'businessUnit': businessUnit, 'application': application })
+            return $http.post("/api/projects", { 'title': projectTitle, 'markets': markets, 'businessUnit': businessUnit, 'application': application })
                 .then(function(response) {
                     console.log("copyProject Promise fulfilled with response data: " + response.data.projectId);
                     deferredProjectId = response.data.projectId;
@@ -137,10 +137,10 @@ mainApp.service('PageInfoService', function($http, $location, $timeout, $q) {
                 });
         },
 
-        this.copyProjectDLs = function(host, port, origProjectId, copiedProjectId) {
+        this.copyProjectDLs = function(origProjectId, copiedProjectId) {
             console.log("retrieveProjectDLsById for id:" + origProjectId);
 
-            return $http.get("http://" + host + ":" + port + "/" + "ITAG_POC/getProjectDLs/" + origProjectId)
+            return $http.get("/api/getDataLayer/" + origProjectId)
                 .then(function(getDLsresponse) {
                     console.log("retrieveProjectDLsById Promise fulfilled with response data: " + getDLsresponse.data);
                     var dataLayerdata = getDLsresponse.data;
@@ -156,7 +156,7 @@ mainApp.service('PageInfoService', function($http, $location, $timeout, $q) {
                             dataLayerName = dataLayerdata[i].dataLayerName;
                             console.log("copiedDL : " + copiedDL + " reqparamKV :" + reqParamKeyVal);
 
-                            $http.post("http://" + host + ":" + port + "/" + "api/saveITagData", { 'dataLayer': copiedDL, 'reqParamKeyVal': reqParamKeyVal, 'projectId': copiedProjectId, 'dataLayerName': dataLayerName })
+                            $http.post("api/saveITagData", { 'dataLayer': copiedDL, 'reqParamKeyVal': reqParamKeyVal, 'projectId': copiedProjectId, 'dataLayerName': dataLayerName })
                                 .then(function(response) {
                                     console.log("copyDataLayer POST Promise fulfilled with response data: " + response.data);
 
