@@ -114,15 +114,45 @@ module.exports = function(app) {
         dataObject.dataLayerName = req.body.dataLayerName;
         dataObject.projectId = req.body.projectId;
 
-        dataObject.save(function(err, dataLayer) {
+        DataLayer.find({ 'reqParamKeyVal': req.body.reqParamKeyVal }, function(err, existingLayer) {
+            // if there is an error retrieving, send the error.
+            // nothing after res.send(err) will execute
             if (err)
                 res.send(err);
 
-            console.log(res);
-            res.json(dataLayer);
+            if (existingLayer.length === 0 || existingLayer === undefined) {
 
+                dataObject.save(function(err, dataLayer) {
+                    if (err)
+                        res.send(err);
+                    res.json(dataLayer);
+
+                });
+            } else {
+                //var err = new Error('duplicate keyValParam exist')
+                // res.json(err)
+                //res.send(err).status(500);
+                res.status(404).send("Oh uh, something went wrong");
+
+            }
         });
+
+
     }
+
+    // get Data layer by reqParamKeyVal
+    app.get('/api/getDataLayerByKeyVal/:reqParamKeyVal', function(req, res) {
+        // use mongoose to get all nerds in the database
+        console.log(req.params.reqParamKeyVal);
+        DataLayer.find({ 'reqParamKeyVal': req.params.reqParamKeyVal }, function(err, datalayer) {
+
+            if (err)
+                res.send(err);
+
+            res.json(JSON.parse(datalayer[0].dataLayer));
+        });
+    });
+
     // get Data layer by id
     app.get('/api/getDataLayerByLayerId/:layerId', function(req, res) {
         // use mongoose to get all nerds in the database

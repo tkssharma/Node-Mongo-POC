@@ -389,11 +389,11 @@
 
 
                             var pmc = JSON.parse(JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data.dataLayer).event).substring(1, JSON.stringify(JSON.parse(data.dataLayer).event).length - 1)).productInfo).substring(1, JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data.dataLayer).event).substring(1, JSON.stringify(JSON.parse(data.dataLayer).event).length - 1)).productInfo).length - 1)).pmc;
-                            var productName = JSON.parse(JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(datadataLayer).event).substring(1, JSON.stringify(JSON.parse(data[0].dataLayer).event).length - 1)).productInfo).substring(1, JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data[0].dataLayer).event).substring(1, JSON.stringify(JSON.parse(data.dataLayer).event).length - 1)).productInfo).length - 1)).productName;
+                            var productName = JSON.parse(JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data.datadataLayer).event).substring(1, JSON.stringify(JSON.parse(data.dataLayer).event).length - 1)).productInfo).substring(1, JSON.stringify(JSON.parse(JSON.stringify(JSON.parse(data.dataLayer).event).substring(1, JSON.stringify(JSON.parse(data.dataLayer).event).length - 1)).productInfo).length - 1)).productName;
                             $scope.selectedData = JSON.parse(data.dataLayer);
                             $scope.selectedDatas = JSON.parse(data.dataLayer);
                             $scope.selectedDatas.event = JSON.parse(data.dataLayer).event;
-                            $scope.selectedDatas.event.productInfo = JSON.parse(JSON.stringify(JSON.parse(data.dataLayer).event).substring(1, JSON.stringify(JSON.parse(data[0].dataLayer).event).length - 1)).productInfo;
+                            $scope.selectedDatas.event.productInfo = JSON.parse(JSON.stringify(JSON.parse(data.dataLayer).event).substring(1, JSON.stringify(JSON.parse(data.dataLayer).event).length - 1)).productInfo;
                             $scope.selectedDatas.event.productInfo.pmc = pmc;
                             $scope.selectedDatas.event.productInfo.productName = productName;
 
@@ -560,9 +560,16 @@
                     }
                     $http.post("/api/createDataLayer", $scope.data)
                         .success(function(data, status, headers) {
-                            $sessionStorage.reqParams = $scope.reqParam;
-                            $localStorage.$reset();
-                            $location.path('/thankyou');
+
+                            if (status === 200) {
+                                $sessionStorage.reqParams = $scope.reqParam;
+                                $localStorage.$reset();
+                                $location.path('/thankyou');
+                            } else {
+                                alert("There is an error while adding data with duplicate parameters");
+
+                            }
+
                         }).error(function(data, status) {
                             alert("There is an error while adding data with duplicate parameters");
                         });
@@ -788,7 +795,7 @@
 
             var copiedProject;
 
-            PageInfoService.retrieveProjectById( $scope.projectId)
+            PageInfoService.retrieveProjectById($scope.projectId)
                 .then(
                     function(retrieveresult) {
                         // promise was fullfilled (regardless of outcome)
